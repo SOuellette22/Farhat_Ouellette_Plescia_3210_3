@@ -17,13 +17,26 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 var controls = new OrbitControls( camera, renderer.domElement );
 controls.update();
 
-var p = new SceneObject(scene);
+var p = new SceneObject();
+scene.add(p.planes);
+scene.add(p.ambientLight);
+scene.add(p.spotLight);
+//scene.add(p.spotLightHelper);
 
 renderer.shadowMap.enabled = true;
 
+var spotLightSwing = 0;
+
+
+var clock = new THREE.Clock();
+
+
 function animate() {
+    var delta = clock.getDelta();
 
     controls.update();
+
+    p.update(delta)
 
     requestAnimationFrame( animate );
     renderer.render( scene, camera );
