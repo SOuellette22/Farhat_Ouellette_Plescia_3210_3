@@ -21,12 +21,9 @@ var p = new SceneObject();
 scene.add(p.planes);
 scene.add(p.ambientLight);
 scene.add(p.spotLight);
-//scene.add(p.spotLightHelper);
+// scene.add(p.spotLightHelper);
 
 renderer.shadowMap.enabled = true;
-
-var spotLightSwing = 0;
-
 
 var clock = new THREE.Clock();
 
