@@ -52,18 +52,21 @@ function keyHandler(e) {
         case 'p': // P toggles the spotlight on and off
             p.spotLight.visible = !p.spotLight.visible;
         break;
-        // case 'w': // W moves the spotlight forward
-        //     p.spotLight.position.z -= 1;
-        // break;
-        // case 's': // S moves the spotlight backward
-        //     p.spotLight.position.z += 1;
-        // break;
-        // case 'a': // A moves the spotlight left
-        //     p.spotLight.position.x -= 1;
-        // break;
-        // case 'd': // D moves the spotlight right
-        //     p.spotLight.position.x += 1;
-        // break;
+        case 'h': // H toggles the spotlight helper on and off
+            p.spotLightHelper.visible = !p.spotLightHelper.visible;
+        break;
+        case 'w': // W moves the spotlight forward
+            p.spotLight.target.position.z -= 0.5;
+        break;
+        case 's': // S moves the spotlight backward
+            p.spotLight.target.position.z += 0.5;
+        break;
+        case 'a': // A moves the spotlight left
+            p.spotLight.target.position.x -= 0.5;
+        break;
+        case 'd': // D moves the spotlight right
+            p.spotLight.target.position.x += 0.5;
+        break;
     }
 }
 
