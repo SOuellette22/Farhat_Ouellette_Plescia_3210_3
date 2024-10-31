@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 
 export default class Plane {
-    constructor() {
+    constructor(yard, foot, inch) {
 
         // Create a group to hold the planes
         this.group = new THREE.Group();
 
         // sets the size of the plane and the number of planes
-        this.sqaureSize = 50;
-        this.numPlanes = 4; // this number squared is the number of planes!!!
+        this.sqaureSize = foot * 4;
+        this.numPlanes = 5; // this number squared is the number of planes!!!
 
         // Creates all the planes with the given size and number
         for (let i = 0; i < this.numPlanes; i++) {
@@ -27,7 +27,7 @@ export default class Plane {
                 var mesh = new THREE.Mesh( geometry, material );
                 mesh.rotation.x = -Math.PI / 2;
                 mesh.receiveShadow = true;
-                mesh.position.set(j*this.sqaureSize, 0, i*this.sqaureSize);
+                mesh.position.set(j*this.sqaureSize, -1 * (inch * 3 + foot * 3), i*this.sqaureSize);
                 this.group.add(mesh);
             }
             
