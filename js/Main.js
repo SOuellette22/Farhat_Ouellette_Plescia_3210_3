@@ -21,7 +21,8 @@ var p = new SceneObject();
 scene.add(p.planes);
 scene.add(p.ambientLight);
 scene.add(p.spotLight);
-// scene.add(p.spotLightHelper);
+scene.add(p.table);
+scene.add(p.spotLightHelper);
 
 renderer.shadowMap.enabled = true;
 
@@ -39,3 +40,31 @@ function animate() {
     renderer.render( scene, camera );
 }
 animate();
+
+function keyHandler(e) {
+    switch (e.key) {
+        case 'q': // Q toggles shadows on and off
+            p.toggleShadow();
+        break;
+        case 'l': // L toggles the ambientlight on and off
+            p.ambientLight.visible = !p.ambientLight.visible;
+        break;
+        case 'p': // P toggles the spotlight on and off
+            p.spotLight.visible = !p.spotLight.visible;
+        break;
+        // case 'w': // W moves the spotlight forward
+        //     p.spotLight.position.z -= 1;
+        // break;
+        // case 's': // S moves the spotlight backward
+        //     p.spotLight.position.z += 1;
+        // break;
+        // case 'a': // A moves the spotlight left
+        //     p.spotLight.position.x -= 1;
+        // break;
+        // case 'd': // D moves the spotlight right
+        //     p.spotLight.position.x += 1;
+        // break;
+    }
+}
+
+document.addEventListener( "keydown", keyHandler, false );

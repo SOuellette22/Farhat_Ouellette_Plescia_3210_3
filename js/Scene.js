@@ -1,11 +1,14 @@
 import * as THREE from 'three';
 import Plane from './Plane';
+import Table from './Table';
 
 export default class Scene {
     constructor() {
 
         // Add a plane to the scene
         this.planes = new Plane().group;
+
+        this.table = new Table().group;
 
         // Added the ambient light to the scene
         this.ambientLight = new THREE.AmbientLight(0xb0c1ff, 0.2);
@@ -15,6 +18,8 @@ export default class Scene {
         this.spotLight.position.set(0, 100, 0);
         this.spotLight.castShadow = true;
         this.spotLightHelper = new THREE.SpotLightHelper(this.spotLight);
+        this.spotLight.shadow.mapSize.width = 1024;
+        this.spotLight.shadow.mapSize.height = 1024;
 
         this.spotLightSwingX = 0;
         this.spotLightSwingY = 0;
@@ -37,6 +42,10 @@ export default class Scene {
         this.spotLight.position.z = 15 * Math.sin(this.spotLightSwingY);
 
         this.spotLightHelper.update();
+    }
+
+    toggleShadow() {
+        this.spotLight.castShadow = !this.spotLight.castShadow;
     }
 
 }
