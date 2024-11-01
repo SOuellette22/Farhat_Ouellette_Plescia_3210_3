@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import SceneObject from './Scene';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import { OrbitControls } from 'OrbitControls';
 
 // Constrols the units of measurement for the scene
 const yard = 1
@@ -22,9 +22,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 // Add the orbit controls to the scene
-var controls = new OrbitControls( camera, renderer.domElement );
-controls.autoRotate = true;
-controls.update();
+// var controls = new OrbitControls( camera, renderer.domElement );
+// controls.autoRotate = true;
+// controls.update();
 
 // add all the necessary objects to the scene
 var p = new SceneObject(yard, foot, inch);
@@ -41,7 +41,7 @@ var clock = new THREE.Clock();
 function animate() {
     var delta = clock.getDelta();
 
-    controls.update();
+    // controls.update();
 
     // Update the scene allowing for the spotlight to "swing"
     p.update(delta)
