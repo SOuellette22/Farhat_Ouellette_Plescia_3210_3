@@ -2,26 +2,31 @@ import * as THREE from 'three';
 import SceneObject from './Scene';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-const yard = 3
+// Constrols the units of measurement for the scene
+const yard = 1
 const foot = yard / 3;
 const inch = foot / 12;
 
 var scene = new THREE.Scene();
 
+// Create the camera and set its position
 var camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, .1, 3000 );
-camera.position.set(0, foot * 3.5, foot * 9);  
+camera.position.set(0, foot * 4, foot * 9);  
 camera.lookAt(0,0,0);
 scene.add( camera );
 
+// Create the canvas and add it to the body
 var renderer = new THREE.WebGLRenderer({canvas: myCanvas, antialias: true});
 renderer.setClearColor(0x000000);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+// Add the orbit controls to the scene
 var controls = new OrbitControls( camera, renderer.domElement );
 controls.autoRotate = true;
 controls.update();
 
+// add all the necessary objects to the scene
 var p = new SceneObject(yard, foot, inch);
 scene.add(p.planes);
 scene.add(p.ambientLight);
@@ -38,6 +43,7 @@ function animate() {
 
     controls.update();
 
+    // Update the scene allowing for the spotlight to "swing"
     p.update(delta)
 
     requestAnimationFrame( animate );
@@ -47,7 +53,7 @@ animate();
 
 function keyHandler(e) {
     switch (e.key) {
-        case 'q': // Q toggles shadows on and off
+        case 'm': // Q toggles shadows on and off
             p.toggleShadow();
         break;
         case 'l': // L toggles the ambientlight on and off

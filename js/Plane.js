@@ -8,7 +8,7 @@ export default class Plane {
 
         // sets the size of the plane and the number of planes
         this.sqaureSize = foot * 4;
-        this.numPlanes = 5; // this number squared is the number of planes!!!
+        this.numPlanes = 10; // this number squared is the number of planes!!!
 
         // Creates all the planes with the given size and number
         for (let i = 0; i < this.numPlanes; i++) {
