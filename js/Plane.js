@@ -10,21 +10,21 @@ export default class Plane {
         this.sqaureSize = foot * 4;
         this.numPlanes = 10; // this number squared is the number of planes!!!
 
+        // material for the planes and addeds the texture
+        var loader = new THREE.TextureLoader();
+        this.material = new THREE.MeshPhongMaterial( { 
+            map: loader.load('textures/planeTexture.jpg'),
+            color: 0xffffff,
+        } );
+
         // Creates all the planes with the given size and number
         for (let i = 0; i < this.numPlanes; i++) {
             for (let j = 0; j < this.numPlanes; j++) {
                 // geometry for the planes
                 var geometry = new THREE.PlaneGeometry( this.sqaureSize, this.sqaureSize, this.sqaureSize, this.sqaureSize );
 
-                // material for the planes and addeds the texture
-                var loader = new THREE.TextureLoader();
-                var material = new THREE.MeshPhongMaterial( { 
-                    map: loader.load('textures/planeTexture.jpg'),
-                    color: 0xffffff,
-                } );
-
                 // creates the mesh and adds it to the group
-                var mesh = new THREE.Mesh( geometry, material );
+                var mesh = new THREE.Mesh( geometry, this.material );
                 mesh.rotation.x = -Math.PI / 2;
                 mesh.receiveShadow = true;
                 mesh.position.set(j*this.sqaureSize, -1 * (inch * 3 + foot * 3), i*this.sqaureSize);

@@ -50,11 +50,7 @@ export default class Table {
     createLeg = function(r,h) {
         var loader = new THREE.TextureLoader();
         var tableLeg1Geo = new THREE.CylinderGeometry(r, r, h, 34);
-        var tableLeg1Mat = new THREE.MeshPhongMaterial( { 
-            map: loader.load('textures/tableTexture.jpg'),
-            color: 0xffffff,
-        } );
-        var mesh = new THREE.Mesh(tableLeg1Geo, tableLeg1Mat);
+        var mesh = new THREE.Mesh(tableLeg1Geo, this.tableMat);
         mesh.castShadow = true;
         mesh.receiveShadow = true
         return mesh;
