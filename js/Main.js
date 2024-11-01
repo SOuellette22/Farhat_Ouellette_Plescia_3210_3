@@ -78,6 +78,9 @@ function keyHandler(e) {
         case 'd': // D moves the spotlight right
             p.spotLight.target.position.x += 0.5;
         break;
+        case 'r': // R stops the camera from auto rotating
+            controls.autoRotate = !controls.autoRotate;
+        break;
     }
 }
 
