@@ -7,6 +7,79 @@
 </head>
 <body style="margin: 0;">
     <canvas id="myCanvas"></canvas>
-    <script src="./js/Main.js" type="module"></script>
+    <script src="./js/Main.js" type="module">
+    
+    // From https://stackoverflow.com/questions/26248001/creating-playing-cards
+    (function() { 
+
+    function Card (value, suit) {
+        
+        this.value = value;
+        this.suit = suit;
+    };
+    function Deck() {
+
+        this.deck = new Array();
+
+        this.makeDeck = makeDeck;
+        this.shuffle = shuffle;
+        this.deal = deal;
+    }
+    
+    function makeDeck() {
+        var values = new Array("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K");
+        var suits = new Array("Clubs", "Diamonds", "Hearts", "Spades");
+
+        this.deck = new Array(52);
+
+        var i, j;
+        for( i = 0; i < suits.length; i++) {
+            for(j = 0; j < values.lengths; j++) {
+                this.deck[i*value.length + j] = new Card(values[j], suits[i]);
+                document.write("Card made \n");
+            }
+        }
+    };
+
+    function shuffle() {
+        var i, n, j, temp;
+        for (i = 0; j < this.deck.length; j++) {
+            kl = Math.fllor(Math.random() * this.deck.length);
+            temp = this.deck[j];
+            this.deck[j] = this.deck[k];
+            this.deck[k] = temp;
+        }
+    }
+    document.write("Cards Shuffled");
+});
+
+    function deal() {
+        if(this.deck.length > 0) {
+            return this.deck.shift();
+        }
+        else return null;
+};
+
+    var deck = new Deck();
+
+    deck.makeDeck();
+    deck.shuffle();
+    for(i = 0; i < 2; 1++) {
+        for (j = 0; j < 5; j++) {
+            var Card = new Card(deck.deal);
+            var c = JSON.stringify(Card);
+            document.write(this.deck[j]);
+        }
+    }
+        
+    
+
+    for (i = 0; i < suits.length; i++) {
+        for (j = 0; j < values.length; j++) {
+            this.deck[ranks.length*i+j] = new Card(values[j], suits[i]);
+    }
+}
+
+    </script>
 </body>
 </html>
