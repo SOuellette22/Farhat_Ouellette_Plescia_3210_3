@@ -1,6 +1,6 @@
-import * as THREE from 'three';
-import Plane from './Plane';
-import Table from './Table';
+import * as THREE from "three";
+import Plane from './Plane.js';
+import Table from './Table.js';
 
 export default class Scene {
     constructor(yard, foot, inch) {
@@ -15,10 +15,10 @@ export default class Scene {
         this.inch = inch
 
         // Added the ambient light to the scene
-        this.ambientLight = new THREE.AmbientLight(0xb0c1ff, 0.2);
+        this.ambientLight = new THREE.AmbientLight(0xb0c1ff, 0.4);
 
         // Added the directional light to the scene
-        this.spotLight = new THREE.SpotLight(0xffffff, foot * 50.0,0, Math.PI / 6, 1, 1.5);
+        this.spotLight = new THREE.SpotLight(0xffffff, (foot * 2.0),0, Math.PI / 6, 1, 1.5);
         this.spotLight.position.set(0, this.yard * 5, 0);
         this.spotLight.castShadow = true;
         this.spotLightHelper = new THREE.SpotLightHelper(this.spotLight);
