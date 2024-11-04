@@ -1,5 +1,3 @@
-import * as THREE from 'three';
-import Card from './Card.js';
 
 export default class Player {
     // At the beginning of the game the player should start with no cards
