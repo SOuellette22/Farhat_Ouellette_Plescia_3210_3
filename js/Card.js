@@ -6,56 +6,109 @@ export default class Card {
         this.value = value;
         this.suit = suit;
 
-        const geometry = new THREE.BoxGeometry(1, 8, 11, 1, 1, 1);
-        const material = new THREE.Material();
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.2, 250);
         const renderer = new THREE.WebGLRenderer({});
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-        Scene.renderer();
+
+        const card = new Card('Hearts', '10');
+        scene.add(card.mesh);
+        camera,position.z = 5;
+
+        const cardWidth = 1
+        const cardHeight = 1.4;
+        const cardDepth = 0.02;
     
-        const mesh = new THREE.Mesh( geometry, material );
+        this.geometry = new THREE.BoxGeometry(cardWidth, cardHeight, cardDepth);
 
-    //<element onKeyDown = "myScript"></element>
-        const loader = new THREE.ObjectLoader();
+        const textureLoader = new THREE.TextureLoader();
+        const frontTexture = textureLoader.load('./textures/${this.suit}_${this.value}.png');
+        const backTexture = textureLoader.load('./textures/card_back.png');
 
-       // let mesh;
 
-        const mixer = new THREE.AnimationMixer(mesh);
-        const clips = mesh.animations;
+        const materials = [
+            new THREE.MeshBasicMaterial({ map: backTexture }),
+            new THREE.MeshBasicMaterial({ map: backTexture }),
+            new THREE.MeshBasicMaterial({ color: 0xcccccc }),
+            new THREE.MeshBasicMaterial({ color: 0xcccccc }),
+            new THREE.MeshBasicMaterial({ color: 0xcccccc }),
+            new THREE.MeshBasicMaterial({ map: frontTexture }),
+        ];
 
-        function update() {
-            mixer.update(deltaSeconds);
-        }
-        const clip = THREE.AnimationClip.findByName('deal');
-        const action = mixer.clipAction(clip);
-        action.play();
+        this.mesh = new THREE.Mesh(this.geometry, material);
 
-        clips.forEach(function(clio) {
-            mixer.clipAction(clip).play();
-        });
+        this.mesh.position.set(0,0,0);
+        this.mesh.rotation.set(0,0,0);
 
-        loader.load(
-            'models/json/example.json',
+        this.mixer = new THREE.AnimationMixer(this.mesh);
+        this.createFlipAnimation();
+    }
 
-            function(obj) {
-                Scene.add(obj);
-            },
-            function(xhr) {
-                console.log((xhr.loaded/xhr.total * 100) + '% loaded');
-            },
+    createFlipAnimation() {
+        const flipDirection = 1;
+        const flipkeyframes = new THREE.NumberKeyframeTrack('.rotation[y]',[0,0.5,1], [0, Math.PI, 2 * Math.PI])
+        const flipclip = THREE.AnimationClip('flip', 1, flipDuration, [flipkeyframes]);
 
-            function(err) {
-                console.error('An error happened');
-            }
-        );
-        AnimationObjectGroup.add()
-        const object = loader.parse(a_json_object);
-        Scene.add(object);
+        this.flipAction = this.mixer.clipAction(flipClip)
+    }
+        
+    }
+    
+    // update(delta) {
+    //     if(this.mixer) {
+    //         this.mixer.update(delta);
+    //     }
+    //     }
+    
+
+    //     const clock = new THREE.Clock();
+    //     function animate() {
+    //         requestAnimationFrame(animate);
+
+    //         const delta = clock.getDelta();
+    //         card.update(delta);
+
+    //     renderer.render(scene, camera);
+    //     }
+    // animate();
+
+
+    // document.addEventListener('click', () => {
+    //     card.flip();
+    // });
+
+        // const action = mixer.clipAction(clip);
+        // action.play();
+
+        // clips.forEach(function(clio) {
+
+        // });
+
+        // loader.load(
+        //     'models/json/example.json',
+
+        //     function(obj) {
+        //         Scene.add(obj);
+        //     },
+        //     function(xhr) {
+        //         console.log((xhr.loaded/xhr.total * 100) + '% loaded');
+        //     },
+
+        //     function(err) {
+        //         console.error('An error happened');
+        //     }
+        // );
+        // AnimationObjectGroup.add()
+        // const object = loader.parse(a_json_object);
+        // Scene.add(object);
+
+
+
 
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture
         // also the animation of the card (https://threejs.org/docs/#manual/en/introduction/Animation-system)
         //  this is a helpful link to help with the animation of the card
-    }
     
-}
+
