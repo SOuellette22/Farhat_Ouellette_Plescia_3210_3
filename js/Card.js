@@ -10,21 +10,19 @@ export default class Card {
         const geometry = new THREE.BoxGeometry(2.5 * inch, 3.5 * inch, (0.75 / 50) * inch);
         
         const textureLoader = new THREE.TextureLoader();
-        
-        var temp = this.value;
-        if (this.value == 11) {
-            temp = 'jack';
+        if (value == 11) {
+            this.value = 'jack';
         }
-        if (this.value == 12) {
-            temp = 'queen';
+        if (value == 12) {
+            this.value = 'queen';
         }
-        if (this.value == 13) {
-            temp = 'king';
+        if (value == 13) {
+            this.value = 'king';
         }
-        if (this.value == 14) {
-            temp = 'ace';
+        if (value == 14) {
+            this.value = 'ace';
         }
-        const path = temp + '_of_' + this.suit + '.png';
+        const path = this.value + '_of_' + this.suit + '.png';
         const frontTexture = textureLoader.load('./textures/cards/'+ path);
         const backTexture = textureLoader.load('./textures/cards/back.png');
 
@@ -38,19 +36,27 @@ export default class Card {
         ];
 
         this.mesh = new THREE.Mesh(geometry, materials);
+        
     }
 
     }
     
-    // let mesh;
+    let mesh;
 
-    // const mixer = new THREE.AnimationMixer(mesh);
-    // const clips = mesh.animations;
+    const mixer = new THREE.AnimationMixer(mesh);
+    const clips = mesh.animations;
 
-    // function update() {
-    //     mixer.update(deltaSeconds);
-    // }
-    // const clip = THREE.AnimationClip.findByName(clips, '')
+    function update() {
+        mixer.update(deltaSeconds);
+    }
+
+    const clip = THREE.AnimationClip.findByName(clips, 'N')
+    const action = mixer.clipAction(clip);
+    action.play();
+
+    clips.forEach(function(clip) {
+        mixer.clipAction(clip).play();
+    });
 
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture

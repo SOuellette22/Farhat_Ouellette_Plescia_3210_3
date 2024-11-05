@@ -36,8 +36,10 @@ export default class Deck {
         }
         
     deal(player1, player2, player3) {
-            this.cards.pop();
-            return this.cards.splice(0, numCards);
+        while(Deck.length > 0){
+            player1.addCard(this.cards.pop());
+            player2.addCard(this.cards.pop());
+            player3.addCard(this.cards.pop());
         }
     }
 
@@ -48,5 +50,5 @@ export default class Deck {
         //  - Shuffle the deck of cards so that they are in a random order
         //  - Deal the cards to the players
 
-
+}
 
