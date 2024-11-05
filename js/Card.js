@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+
 export default class Card {
     
     constructor(suit, value, inch) {
@@ -41,23 +42,23 @@ export default class Card {
 
     }
     
-    let mesh;
+    // let mesh;
 
-    const mixer = new THREE.AnimationMixer(mesh);
-    const clips = mesh.animations;
+    // const mixer = new THREE.AnimationMixer(mesh);
+    // const clips = mesh.animations;
 
-    function update() {
-        mixer.update(deltaSeconds);
-    }
+    // function update() {
+    //     mixer.update(deltaSeconds);
+    // }
 
-    const clip = THREE.AnimationClip.findByName(clips, 'N')
-    const action = mixer.clipAction(clip);
-    action.play();
+    // const clip = THREE.AnimationClip.findByName(clips, 'N')
+    // const action = mixer.clipAction(clip);
+    // action.play();
 
-    clips.forEach(function(clip) {
-        mixer.clipAction(clip).play();
-    });
-
+    // clips.forEach(function(clip) {
+    //     mixer.clipAction(clip).play();
+    // });
+    
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture
         // also the animation of the card (https://threejs.org/docs/#manual/en/introduction/Animation-system)
