@@ -24,7 +24,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 // Add the orbit controls to the scene
 var controls = new OrbitControls( camera, renderer.domElement );
-controls.autoRotate = true;
+controls.autoRotate = false;
 controls.update();
 
 // add all the necessary objects to the scene
@@ -35,7 +35,9 @@ scene.add(p.spotLight);
 scene.add(p.spotLight.target);
 scene.add(p.table);
 scene.add(p.spotLightHelper);
-scene.add(new Cards("clubs", 2, inch).mesh)
+var card = new Cards("clubs", 11, inch)
+card.mesh.position.set(0, inch * 2, 0);
+scene.add(card.mesh);
 
 
 renderer.shadowMap.enabled = true;

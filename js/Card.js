@@ -7,26 +7,35 @@ export default class Card {
         this.value = value;
         this.suit = suit;
 
-        const geometry = new THREE.BoxGeometry(2.5 * inch, 3.5 * inch, 0.75 * inch);
+        const geometry = new THREE.BoxGeometry(2.5 * inch, 3.5 * inch, (0.75 / 50) * inch);
         
         const textureLoader = new THREE.TextureLoader();
-        const frontTexture = textureLoader.load('./textures/${this.value}_of_${this.suit}.png');
-        const backTexture = textureLoader.load('./textures/card_back.png');
+        if (value == 11) {
+            this.value = 'jack';
+        }
+        if (value == 12) {
+            this.value = 'queen';
+        }
+        if (value == 13) {
+            this.value = 'king';
+        }
+        if (value == 1) {
+            this.value = 'ace';
+        }
+        const path = this.value + '_of_' + this.suit + '.png';
+        const frontTexture = textureLoader.load('./textures/cards/'+ path);
+        const backTexture = textureLoader.load('./textures/cards/back.png');
 
         const materials = [
-            new THREE.MeshBasicMaterial({ map: backTexture }),
-            new THREE.MeshBasicMaterial({ color: 0xdddddd }),
-            new THREE.MeshBasicMaterial({ color: 0xcccccc }),
-            new THREE.MeshBasicMaterial({ color: 0xcccccc }),
-            new THREE.MeshBasicMaterial({ color: 0xcccccc }),
-            new THREE.MeshBasicMaterial({ map: frontTexture }),
+            new THREE.MeshPhongMaterial({ color: 0xffffff }),
+            new THREE.MeshPhongMaterial({ color: 0xffffff }),
+            new THREE.MeshPhongMaterial({ color: 0xffffff }),
+            new THREE.MeshPhongMaterial({ color: 0xffffff }),
+            new THREE.MeshPhongMaterial({ map: frontTexture }),
+            new THREE.MeshPhongMaterial({ map: backTexture }),
         ];
 
         this.mesh = new THREE.Mesh(geometry, materials);
-
-        this.mesh.position.set(0,10,0);
-
-        this.mixer = new THREE.AnimationMixer(this.mesh);
         // this.createFlipAnimation();
     }
 
