@@ -26,6 +26,10 @@ var controls = new OrbitControls( camera, renderer.domElement );
 controls.autoRotate = true;
 controls.update();
 
+var audio = document.getElementById("myAudio");
+audio.muted = true;
+audio.volume = 0.10;
+
 // add all the necessary objects to the scene
 var p = new SceneObject(yard, foot, inch);
 scene.add(p.planes);
@@ -47,6 +51,10 @@ function animate() {
     // Update the scene allowing for the spotlight to "swing"
     p.update(delta)
 
+    if (audio.paused) {
+        playAudio();
+    }
+    
     requestAnimationFrame( animate );
     renderer.render( scene, camera );
 }
@@ -81,7 +89,14 @@ function keyHandler(e) {
         case 'r': // R stops the camera from auto rotating
             controls.autoRotate = !controls.autoRotate;
         break;
+        case 'n': // N mutes the audio to allow for the user to listen to the music
+            audio.muted = !audio.muted;
+        break;
     }
 }
 
 document.addEventListener( "keydown", keyHandler, false );
+
+function playAudio() {
+    audio.play();
+}
