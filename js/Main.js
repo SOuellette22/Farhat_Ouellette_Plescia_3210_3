@@ -89,7 +89,7 @@ function keyHandler(e) {
         case 'r': // R stops the camera from auto rotating
             controls.autoRotate = !controls.autoRotate;
         break;
-        case 'n': // N mutes the audio to allow for the user to listen to the music
+        case 'o': // O mutes the audio to allow for the user to listen to the music
             audio.muted = !audio.muted;
         break;
     }
