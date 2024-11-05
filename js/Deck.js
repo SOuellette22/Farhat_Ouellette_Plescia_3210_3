@@ -37,7 +37,8 @@ export default class Deck {
                 [this.cards[i], this.cards[j]] = [this.cards, this.cards[i]];
             }
         }
-        deal(numCards) {
+        deal(player1, player2, player3) {
+            this.cards.pop();
             return this.cards.splice(0, numCards);
         }
         

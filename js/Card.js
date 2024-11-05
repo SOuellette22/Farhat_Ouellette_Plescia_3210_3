@@ -2,56 +2,41 @@ import * as THREE from 'three';
 
 export default class Card {
     
-    constructor(suit, value) {
+    constructor(suit, value, inch) {
+        
         this.value = value;
         this.suit = suit;
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.2, 250);
-        const renderer = new THREE.WebGLRenderer({});
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        const card = new Card('Hearts', '10');
-        scene.add(card.mesh);
-        camera,position.z = 5;
-
-        const cardWidth = 1
-        const cardHeight = 1.4;
-        const cardDepth = 0.02;
-    
-        this.geometry = new THREE.BoxGeometry(cardWidth, cardHeight, cardDepth);
-
+        const geometry = new THREE.BoxGeometry(2.5 * inch, 3.5 * inch, 0.75 * inch);
+        
         const textureLoader = new THREE.TextureLoader();
-        const frontTexture = textureLoader.load('./textures/${this.suit}_${this.value}.png');
+        const frontTexture = textureLoader.load('./textures/${this.value}_of_${this.suit}.png');
         const backTexture = textureLoader.load('./textures/card_back.png');
-
 
         const materials = [
             new THREE.MeshBasicMaterial({ map: backTexture }),
-            new THREE.MeshBasicMaterial({ map: backTexture }),
+            new THREE.MeshBasicMaterial({ color: 0xdddddd }),
             new THREE.MeshBasicMaterial({ color: 0xcccccc }),
             new THREE.MeshBasicMaterial({ color: 0xcccccc }),
             new THREE.MeshBasicMaterial({ color: 0xcccccc }),
             new THREE.MeshBasicMaterial({ map: frontTexture }),
         ];
 
-        this.mesh = new THREE.Mesh(this.geometry, material);
+        this.mesh = new THREE.Mesh(geometry, materials);
 
-        this.mesh.position.set(0,0,0);
-        this.mesh.rotation.set(0,0,0);
+        this.mesh.position.set(0,10,0);
 
         this.mixer = new THREE.AnimationMixer(this.mesh);
-        this.createFlipAnimation();
+        // this.createFlipAnimation();
     }
 
-    createFlipAnimation() {
-        const flipDirection = 1;
-        const flipkeyframes = new THREE.NumberKeyframeTrack('.rotation[y]',[0,0.5,1], [0, Math.PI, 2 * Math.PI])
-        const flipclip = THREE.AnimationClip('flip', 1, flipDuration, [flipkeyframes]);
+    // createFlipAnimation() {
+    //     const flipDirection = 1;
+    //     const flipKeyFrames = new THREE.NumberKeyframeTrack('.rotation[y]',[0,0.5,1], [0, Math.PI, 2 * Math.PI])
+    //     const flipClip = THREE.AnimationClip('flip', 1, flipDuration, [flipkeyframes]);
 
-        this.flipAction = this.mixer.clipAction(flipClip)
-    }
+    //     this.flipAction = this.mixer.clipAction(flipClip)
+    // }
         
     }
     

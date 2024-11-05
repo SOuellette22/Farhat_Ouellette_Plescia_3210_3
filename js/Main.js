@@ -1,6 +1,7 @@
-import * as THREE from "three";
-import SceneObject  from './Scene.js';
 import { OrbitControls } from "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "three";
+import Cards from "./Card.js";
+import SceneObject from './Scene.js';
 
 // Constrols the units of measurement for the scene
 const yard = 1
@@ -34,6 +35,8 @@ scene.add(p.spotLight);
 scene.add(p.spotLight.target);
 scene.add(p.table);
 scene.add(p.spotLightHelper);
+scene.add(new Cards("clubs", 2, inch).mesh)
+
 
 renderer.shadowMap.enabled = true;
 
