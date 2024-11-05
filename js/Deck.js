@@ -1,31 +1,33 @@
 import Card from './Card.js';
 
+
 export default class Deck {
-    constructor() {
+    constructor(inch) {
         this.cards = [];
-        this.Deck();
-        this.initializeDeck();
+        this.initializeDeck(inch);
         this.shuffle();
         this.deal();
     }
 
-    Deck() {
-        const deck = new Deck();
-        const playerHand = this.Deck.deal(5);
-        console.log(playerHand);
-        
-    }
-    initializeDeck() {
-        for(var s = 0; s < 4; s++);
-            for(var v = 2; v < 15; v++);
-            if(s == 1);
-                cards.append(new Card("clubs", v, inch));
-            if(s == 3);
-                cards.append(new Card("diamonds", v, inch));
-            if(s == 4);
-                cards.append(new Card("spades", v, inch));
-            if(s == 0);
-                cards.append(new Card("hearts", v, inch));
+    initializeDeck(inch) {
+        for(var s = 0; s < 4; s++){
+            for(var v = 2; v < 15; v++){
+                if(s == 1){
+                    this.cards.append(new Card("clubs", v, inch));
+                }
+                if(s == 3) {
+                    this.cards.append(new Card("diamonds", v, inch));
+                }
+                if(s == 4) {
+                    this.cards.append(new Card("spades", v, inch));
+                }
+                if(s == 0) {
+                    this.cards.append(new Card("hearts", v, inch));
+                }
+            }
+            
+        }
+            
         
         for(let suit of suit) {
             for(values of values) {

@@ -19,7 +19,7 @@ export default class Card {
         if (value == 13) {
             this.value = 'king';
         }
-        if (value == 1) {
+        if (value == 14) {
             this.value = 'ace';
         }
         const path = this.value + '_of_' + this.suit + '.png';
@@ -36,69 +36,19 @@ export default class Card {
         ];
 
         this.mesh = new THREE.Mesh(geometry, materials);
-        // this.createFlipAnimation();
     }
 
-    // createFlipAnimation() {
-    //     const flipDirection = 1;
-    //     const flipKeyFrames = new THREE.NumberKeyframeTrack('.rotation[y]',[0,0.5,1], [0, Math.PI, 2 * Math.PI])
-    //     const flipClip = THREE.AnimationClip('flip', 1, flipDuration, [flipkeyframes]);
+    }
+    
+    // let mesh;
 
-    //     this.flipAction = this.mixer.clipAction(flipClip)
+    // const mixer = new THREE.AnimationMixer(mesh);
+    // const clips = mesh.animations;
+
+    // function update() {
+    //     mixer.update(deltaSeconds);
     // }
-        
-    }
-    
-    // update(delta) {
-    //     if(this.mixer) {
-    //         this.mixer.update(delta);
-    //     }
-    //     }
-    
-
-    //     const clock = new THREE.Clock();
-    //     function animate() {
-    //         requestAnimationFrame(animate);
-
-    //         const delta = clock.getDelta();
-    //         card.update(delta);
-
-    //     renderer.render(scene, camera);
-    //     }
-    // animate();
-
-
-    // document.addEventListener('click', () => {
-    //     card.flip();
-    // });
-
-        // const action = mixer.clipAction(clip);
-        // action.play();
-
-        // clips.forEach(function(clio) {
-
-        // });
-
-        // loader.load(
-        //     'models/json/example.json',
-
-        //     function(obj) {
-        //         Scene.add(obj);
-        //     },
-        //     function(xhr) {
-        //         console.log((xhr.loaded/xhr.total * 100) + '% loaded');
-        //     },
-
-        //     function(err) {
-        //         console.error('An error happened');
-        //     }
-        // );
-        // AnimationObjectGroup.add()
-        // const object = loader.parse(a_json_object);
-        // Scene.add(object);
-
-
-
+    // const clip = THREE.AnimationClip.findByName(clips, '')
 
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture
