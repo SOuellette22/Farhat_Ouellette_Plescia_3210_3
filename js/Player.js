@@ -14,7 +14,7 @@ export default class Player {
 
     // drawCard() takes the top card from the player's hand and returns it
     drawCard() {
-        var card = this.cards.pop();
+        var card = this.cards.shift();
         if (card == undefined) {
             this.score = 0;
             return null;
