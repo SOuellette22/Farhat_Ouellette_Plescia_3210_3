@@ -38,27 +38,37 @@ export default class Card {
         ];
 
         this.mesh = new THREE.Mesh(geometry, materials);
-        
-    }
-
-    }
     
-    // let mesh;
+        document.addEventListener('keydown', (event) => {
+        if (event.key === 'N' || event.key === 'n') {
+                action.reset();  // Reset the animation to the beginning
+                action.play();   // Play the animation from the start
+            }
+        });
 
-    // const mixer = new THREE.AnimationMixer(mesh);
-    // const clips = mesh.animations;
+        document.addEventListener('keyup', (event) => {
+            if (event.key === 'N' || event.key === 'n') {
+                    action.reset();  // Reset the animation to the beginning
+                    action.play();   // Play the animation from the start
+                }
+            });
+        
+        let lastTime = performance.now();
+    
+        function animate() {
+        requestAnimationFrame(animate);
 
-    // function update() {
-    //     mixer.update(deltaSeconds);
-    // }
+        const currentTime = performance.now();
+        const deltaTime = (currentTime - lastTime) / 1000;
+        lastTime = currentTime;
 
-    // const clip = THREE.AnimationClip.findByName(clips, 'N')
-    // const action = mixer.clipAction(clip);
-    // action.play();
+        const movementSpeed = speed * deltaTime;
 
-    // clips.forEach(function(clip) {
-    //     mixer.clipAction(clip).play();
-    // });
+        renderer.clear();
+        renderer.render(scene, camera);
+        }
+    }
+}
     
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture
