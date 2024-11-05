@@ -5,34 +5,27 @@ export default class Deck {
     constructor(inch) {
         this.cards = [];
         this.initializeDeck(inch);
-        this.shuffle();
-        this.deal();
+        // this.shuffle();
+        // this.deal();
     }
 
     initializeDeck(inch) {
         for(var s = 0; s < 4; s++){
             for(var v = 2; v < 15; v++){
-                if(s == 1){
-                    this.cards.append(new Card("clubs", v, inch));
-                }
-                if(s == 3) {
-                    this.cards.append(new Card("diamonds", v, inch));
-                }
-                if(s == 4) {
-                    this.cards.append(new Card("spades", v, inch));
-                }
                 if(s == 0) {
-                    this.cards.append(new Card("hearts", v, inch));
+                    this.cards.push(new Card("hearts", v, inch));
+                }
+                else if(s == 1){
+                    this.cards.push(new Card("clubs", v, inch));
+                }
+                else if(s == 2) {
+                    this.cards.push(new Card("diamonds", v, inch));
+                }
+                else {
+                    this.cards.push(new Card("spades", v, inch));
                 }
             }
             
-        }
-            
-        
-        for(let suit of suit) {
-            for(values of values) {
-                this.cards.push(new Card(suit, value));
-            }
         }
     }
     shuffle() {

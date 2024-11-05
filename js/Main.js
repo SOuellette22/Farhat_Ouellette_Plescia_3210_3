@@ -2,6 +2,7 @@ import { OrbitControls } from "https://unpkg.com/three@0.138.0/examples/jsm/cont
 import * as THREE from "three";
 import Cards from "./Card.js";
 import SceneObject from './Scene.js';
+import Deck from './Deck.js';
 
 // Constrols the units of measurement for the scene
 const yard = 1
@@ -35,9 +36,20 @@ scene.add(p.spotLight);
 scene.add(p.spotLight.target);
 scene.add(p.table);
 scene.add(p.spotLightHelper);
-var card = new Cards("clubs", 11, inch)
-card.mesh.position.set(0, inch * 2, 0);
-scene.add(card.mesh);
+
+// Single card Test Code below:
+// var card = new Cards("clubs", 11, inch)
+// card.mesh.position.set(0, inch * 2, 0);
+// scene.add(card.mesh);
+
+// Test the Deck code below:
+// var deck = new Deck(inch);
+// for (let i = 0; i < 4; i++) {
+//     for (let j = 0; j < 13; j++) {
+//         deck.cards[i * 13 + j].mesh.position.set((inch * 2.5) * i, (inch * 3.5) * j, 0);
+//         scene.add(deck.cards[i * 13 + j].mesh);
+//     }
+// }
 
 
 renderer.shadowMap.enabled = true;

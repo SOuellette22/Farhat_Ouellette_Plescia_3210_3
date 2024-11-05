@@ -10,19 +10,21 @@ export default class Card {
         const geometry = new THREE.BoxGeometry(2.5 * inch, 3.5 * inch, (0.75 / 50) * inch);
         
         const textureLoader = new THREE.TextureLoader();
-        if (value == 11) {
-            this.value = 'jack';
+        
+        var temp = this.value;
+        if (this.value == 11) {
+            temp = 'jack';
         }
-        if (value == 12) {
-            this.value = 'queen';
+        if (this.value == 12) {
+            temp = 'queen';
         }
-        if (value == 13) {
-            this.value = 'king';
+        if (this.value == 13) {
+            temp = 'king';
         }
-        if (value == 14) {
-            this.value = 'ace';
+        if (this.value == 14) {
+            temp = 'ace';
         }
-        const path = this.value + '_of_' + this.suit + '.png';
+        const path = temp + '_of_' + this.suit + '.png';
         const frontTexture = textureLoader.load('./textures/cards/'+ path);
         const backTexture = textureLoader.load('./textures/cards/back.png');
 
