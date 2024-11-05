@@ -36,7 +36,8 @@ export default class Deck {
         }
         
     deal(player1, player2, player3) {
-        while(Deck.length > 0){
+        this.cards.pop();
+        while(this.cards.length > 0) {
             player1.addCard(this.cards.pop());
             player2.addCard(this.cards.pop());
             player3.addCard(this.cards.pop());
