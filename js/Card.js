@@ -41,25 +41,7 @@ export default class Card {
         this.mesh.castShadow = true;
         
     }
-
-    }
-    
-    // let mesh;
-
-    // const mixer = new THREE.AnimationMixer(mesh);
-    // const clips = mesh.animations;
-
-    // function update() {
-    //     mixer.update(deltaSeconds);
-    // }
-
-    // const clip = THREE.AnimationClip.findByName(clips, 'N')
-    // const action = mixer.clipAction(clip);
-    // action.play();
-
-    // clips.forEach(function(clip) {
-    //     mixer.clipAction(clip).play();
-    // });
+}
     
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture
