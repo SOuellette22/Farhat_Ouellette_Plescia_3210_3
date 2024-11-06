@@ -6,20 +6,18 @@ export default class Player {
         this.cards = [];
         this.score = 0;
         this.inch = inch;
-        this.cradGroup = null;
+        this.cardGroup = null;
     }
 
     // addCard(card) adds a card to the player's hand
     addCard(card) {
         this.cards.push(card);
         this.score += 1;
-        this.updateGeo();
     }
 
     // drawCard() takes the top card from the player's hand and returns it
     drawCard() {
         var card = this.cards.shift();
-        this.updateGeo();
         if (card == undefined) {
             this.score = 0;
             return null;
@@ -45,13 +43,17 @@ export default class Player {
                 this.cards[i].mesh.position.set(-1 * (this.inch * 12) * 2.75, (0.11 * this.inch) * (i+1), 0);
                 this.cards[i].mesh.rotation.z = Math.PI / 2;
             }
-            if (this.id == 2) {
+            else if (this.id == 2) {
                 this.cards[i].mesh.position.set(0, (0.11 * this.inch) * (i+1), -1 * (this.inch * 12) * 2.75);
+                if (this.cards[i].mesh.rotation.z = Math.PI / 2) {
+                    this.cards[i].mesh.rotation.z = 0;
+                }
             }
-            if (this.id == 3) {
+            else if (this.id == 3) {
                 this.cards[i].mesh.position.set(1 * (this.inch * 12) * 2.75, (0.11 * this.inch) * (i+1), 0);
                 this.cards[i].mesh.rotation.z = Math.PI / 2;
             }
+
             this.cardGroup.add(this.cards[i].mesh);
         }
     }

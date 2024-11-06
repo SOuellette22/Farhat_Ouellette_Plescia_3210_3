@@ -64,6 +64,9 @@ var player2 = new Player(inch, 2);
 var player3 = new Player(inch, 3);
 
 deck.deal(player1, player2, player3);
+player1.updateGeo();
+player2.updateGeo();
+player3.updateGeo();
 
     // console.log(player1.cards);
     // console.log(player1.score);
@@ -95,6 +98,101 @@ renderer.shadowMap.enabled = true;
 
 var clock = new THREE.Clock();
 
+// Function that plays the game
+
+var cardsPlayed = [];
+var gameOver = false;
+
+function playGame() {
+
+    var cardP1 = player1.drawCard();
+    var cardP2 = player2.drawCard();
+    var cardP3 = player3.drawCard();
+
+    if (cardP1 == null || cardP2 == null || cardP3 == null) {
+        console.log("Game Over");
+        gameOver = true;
+        return;
+    }
+
+    if (cardP1.value > cardP2.value && cardP1.value > cardP3.value) {
+        player1.addCard(cardP1);
+        player1.addCard(cardP2);
+        player1.addCard(cardP3);
+        if (cardsPlayed.length > 0) {
+            for (var i = 0; i < cardsPlayed.length; i++) {
+                player1.addCard(cardsPlayed[i]);
+            }
+            cardsPlayed = [];
+        }
+        console.log("Player 1 wins the round");
+    } else if (cardP2.value > cardP1.value && cardP2.value > cardP3.value) {
+        player2.addCard(cardP1);
+        player2.addCard(cardP2);
+        player2.addCard(cardP3);
+        if (cardsPlayed.length > 0) {
+            for (var i = 0; i < cardsPlayed.length; i++) {
+                player2.addCard(cardsPlayed[i]);
+            }
+            cardsPlayed = [];
+        }
+        console.log("Player 2 wins the round");
+    } else if (cardP3.value > cardP1.value && cardP3.value > cardP2.value) {
+        player3.addCard(cardP1);
+        player3.addCard(cardP2);
+        player3.addCard(cardP3);
+        if (cardsPlayed.length > 0) {
+            for (var i = 0; i < cardsPlayed.length; i++) {
+                player3.addCard(cardsPlayed[i]);
+            }
+            cardsPlayed = [];
+        }
+        console.log("Player 3 wins the round");
+    } else {
+
+        console.log("War!");
+
+        var p1WDisc = null;
+        var p2WDisc = null;
+        var p3WDisc = null;
+
+        p1WDisc = player1.drawCard();
+        if (p1WDisc != null) {
+            cardsPlayed.push(p1WDisc);
+            cardsPlayed.push(cardP1);
+        } else {
+            cardsPlayed.push(cardP1);
+        }
+
+        p2WDisc = player2.drawCard();
+        if (p2WDisc != null) {
+            cardsPlayed.push(p2WDisc);
+            cardsPlayed.push(cardP2);
+        } else {
+            cardsPlayed.push(cardP2);
+        }
+
+        p3WDisc = player3.drawCard();
+        if (p3WDisc != null) {
+            cardsPlayed.push(p3WDisc);
+            cardsPlayed.push(cardP3);
+        } else {
+            cardsPlayed.push(cardP3);
+        }
+
+        playGame();
+    }
+
+    player1.updateGeo();
+    player2.updateGeo();
+    player3.updateGeo();
+
+    scene.add(player1.cardGroup)
+    scene.add(player2.cardGroup)
+    scene.add(player3.cardGroup)
+    
+}
+
 function animate() {
     var delta = clock.getDelta();
 
@@ -103,9 +201,9 @@ function animate() {
     // Update the scene allowing for the spotlight to "swing"
     p.update(delta)
 
-    if (audio.paused) {
-        playAudio();
-    }
+    // if (audio.paused || !audio.muted) {
+    //     playAudio();
+    // }
     
     requestAnimationFrame( animate );
     renderer.render( scene, camera );
@@ -143,6 +241,37 @@ function keyHandler(e) {
         break;
         case 'o': // O mutes the audio to allow for the user to listen to the music
             audio.muted = !audio.muted;
+        break;
+        case 'n': // N plays the game
+            if (!gameOver) {
+                playGame();
+            } else {
+                console.log("Start a new game");
+                
+                deck = new Deck(inch);
+
+                player1 = new Player(inch, 1);
+                player2 = new Player(inch, 2);
+                player3 = new Player(inch, 3);
+
+                deck.deal(player1, player2, player3);
+
+                player1.updateGeo();
+                player2.updateGeo();
+                player3.updateGeo();
+
+                scene.add(player1.cardGroup)
+                scene.add(player2.cardGroup)
+                scene.add(player3.cardGroup)
+
+                console.log("Number of cards in player 1's hand: " + player1.cards.length);
+                console.log("Number of cards in player 2's hand: " + player2.cards.length);
+                console.log("Number of cards in player 3's hand: " + player3.cards.length);
+
+                cardsPlayed = [];
+
+                gameOver = false;
+            }
         break;
     }
 }
