@@ -39,6 +39,35 @@ export default class Card {
 
         this.mesh = new THREE.Mesh(geometry, materials);
         this.mesh.castShadow = true;
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'N' || event.key === 'n') {
+                    action.reset();  // Reset the animation to the beginning
+                    action.play();   // Play the animation from the start
+                }
+            });
+    
+            document.addEventListener('keyup', (event) => {
+                if (event.key === 'N' || event.key === 'n') {
+                        action.reset();  // Reset the animation to the beginning
+                        action.play();   // Play the animation from the start
+                    }
+                });
+            
+            let lastTime = performance.now();
+        
+            function animate() {
+            requestAnimationFrame(animate);
+    
+            const currentTime = performance.now();
+            const deltaTime = (currentTime - lastTime) / 1000;
+            lastTime = currentTime;
+    
+            const movementSpeed = speed * deltaTime;
+    
+            renderer.clear();
+            renderer.render(scene, camera);
+            }
         
     }
 }
