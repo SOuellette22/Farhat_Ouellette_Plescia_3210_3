@@ -201,9 +201,9 @@ function animate() {
     // Update the scene allowing for the spotlight to "swing"
     p.update(delta)
 
-    // if (audio.paused || !audio.muted) {
-    //     playAudio();
-    // }
+    if (audio.paused || !audio.muted) {
+        playAudio();
+    }
     
     requestAnimationFrame( animate );
     renderer.render( scene, camera );
