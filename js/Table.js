@@ -48,7 +48,6 @@ export default class Table {
 
     // Function to create the table legs
     createLeg = function(r,h) {
-        var loader = new THREE.TextureLoader();
         var tableLeg1Geo = new THREE.CylinderGeometry(r, r, h, 34);
         var mesh = new THREE.Mesh(tableLeg1Geo, this.tableMat);
         mesh.castShadow = true;

@@ -1,4 +1,3 @@
-import { OrbitControls } from "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js";
 import * as THREE from "three";
 import Cards from "./Card.js";
 import SceneObject from './Scene.js';
@@ -23,11 +22,6 @@ var renderer = new THREE.WebGLRenderer({canvas: myCanvas, antialias: true});
 renderer.setClearColor(0x000000);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-// Add the orbit controls to the scene
-var controls = new OrbitControls( camera, renderer.domElement );
-controls.autoRotate = false;
-controls.update();
 
 var audio = document.getElementById("myAudio");
 audio.muted = true;
@@ -193,10 +187,27 @@ function playGame() {
     
 }
 
+// rotates the camera around the scene
+function rotateAboutWorldAxis(object, axis, angle) {
+    var rotationMatrix = new THREE.Matrix4() ;
+    rotationMatrix.makeRotationAxis( axis.normalize() ,angle) ;
+    var currentPos = new THREE.Vector4(object.position.x, object.position.y, object.position.z, 1) ;
+    var newPos = currentPos.applyMatrix4( rotationMatrix );
+    object.position.x = newPos.x ;
+    object.position.y = newPos.y ;
+    object.position.z = newPos.z ;
+}
+
+var cameraRotation = false;
+
 function animate() {
     var delta = clock.getDelta();
 
-    controls.update();
+    // Rotate the camera around the scene
+    if (cameraRotation) {
+        rotateAboutWorldAxis(camera, new THREE.Vector3(0,1,0), Math.PI / 10 * delta);
+        camera.lookAt(0,0,0);
+    }
 
     // Update the scene allowing for the spotlight to "swing"
     p.update(delta)
@@ -237,7 +248,7 @@ function keyHandler(e) {
             p.spotLight.target.position.x += 0.5;
         break;
         case 'r': // R stops the camera from auto rotating
-            controls.autoRotate = !controls.autoRotate;
+            cameraRotation = !cameraRotation;
         break;
         case 'o': // O mutes the audio to allow for the user to listen to the music
             audio.muted = !audio.muted;
