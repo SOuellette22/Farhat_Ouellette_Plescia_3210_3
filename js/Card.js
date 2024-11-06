@@ -8,7 +8,7 @@ export default class Card {
         this.value = value;
         this.suit = suit;
 
-        const geometry = new THREE.BoxGeometry(2.5 * inch, 3.5 * inch, (0.75 / 52) * inch);
+        const geometry = new THREE.BoxGeometry(3.5 * inch, 5 * inch, 0.10 * inch);
         
         const textureLoader = new THREE.TextureLoader();
         var temp = this.value;
@@ -38,6 +38,7 @@ export default class Card {
         ];
 
         this.mesh = new THREE.Mesh(geometry, materials);
+        this.mesh.castShadow = true;
         
     }
 

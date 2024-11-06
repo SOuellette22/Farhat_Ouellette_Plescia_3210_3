@@ -44,21 +44,22 @@ scene.add(p.spotLightHelper);
     // scene.add(card.mesh);
 
 // Test the Deck code below:
-    var deck = new Deck(inch);
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 13; j++) {
-            deck.cards[i * 13 + j].mesh.position.set((inch * 2.5) * i, (inch * 3.5) * j, 0);
-            scene.add(deck.cards[i * 13 + j].mesh);
-        }
-    }
-    console.log(deck.cards);
+var deck = new Deck(inch);
+    // console.log(deck.cards);
+    // for (let i = 0; i < 4; i++) {
+    //     for (let j = 0; j < 13; j++) {
+    //         deck.cards[i * 13 + j].mesh.position.set((inch * 2.5) * i, (inch * 3.5) * j, 0);
+    //         scene.add(deck.cards[i * 13 + j].mesh);
+    //     }
+    // }
+    // console.log(deck.cards);
 
 // Test the Player code below:
-    // var player1 = new Player();
-    // var player2 = new Player();
-    // var player3 = new Player();
+var player1 = new Player(inch, 1);
+var player2 = new Player(inch, 2);
+var player3 = new Player(inch, 3);
 
-    // deck.deal(player1, player2, player3);
+deck.deal(player1, player2, player3);
 
     // console.log(player1.cards);
     // console.log(player1.score);
@@ -72,6 +73,19 @@ scene.add(p.spotLightHelper);
         // console.log(player3.cards);
         // console.log(player3.score);
         // console.log(drawCard);
+
+// Test code to see if the player deck will work
+scene.add(player1.cardGroup)
+    // console.log("Player 1")
+    // console.log(player1.cardGroup)
+
+scene.add(player2.cardGroup)
+    // console.log("Player 2")
+    // console.log(player2.cardGroup)
+
+scene.add(player3.cardGroup)
+    // console.log("Player 3")
+    // console.log(player2.cardGroup)
 
 renderer.shadowMap.enabled = true;
 

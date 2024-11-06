@@ -18,7 +18,7 @@ export default class Scene {
         this.ambientLight = new THREE.AmbientLight(0xb0c1ff, 0.4);
 
         // Added the directional light to the scene
-        this.spotLight = new THREE.SpotLight(0xffffff, (foot * 100.0),0, Math.PI / 6, 1, 1.5);
+        this.spotLight = new THREE.SpotLight(0xffffff, (foot * 40.0),0, Math.PI / 6, 1, 1.5);
         this.spotLight.position.set(0, this.yard * 5, 0);
         this.spotLight.castShadow = true;
         this.spotLightHelper = new THREE.SpotLightHelper(this.spotLight);
