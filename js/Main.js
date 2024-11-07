@@ -98,7 +98,17 @@ var cardsPlayed = [];
 var gameOver = false;
 
 function playGame() {
+    console.log("Starting a new round");
 
+    // Only proceed if the previous round's cards have finished returning
+    if (cardsPlayed.length > 0) {
+        console.log("Cards already played this round: ", cardsPlayed);
+        returnCardsToWinner();
+        cardsPlayed.length = 0;
+        return; // Don't proceed to new turn until the previous cards are returned
+    }
+
+    // Draw cards for the new round
     var cardP1 = player1.drawCard();
     var cardP2 = player2.drawCard();
     var cardP3 = player3.drawCard();
@@ -109,43 +119,24 @@ function playGame() {
         return;
     }
 
+    // Add cards to the table (cards played in this round)
+    cardsPlayed.push(cardP1, cardP2, cardP3);
+    console.log("New cards drawn: ", cardsPlayed);
+
+    // Determine winner of the round
+    let winner = null;
+
     if (cardP1.value > cardP2.value && cardP1.value > cardP3.value) {
-        player1.addCard(cardP1);
-        player1.addCard(cardP2);
-        player1.addCard(cardP3);
-        if (cardsPlayed.length > 0) {
-            for (var i = 0; i < cardsPlayed.length; i++) {
-                player1.addCard(cardsPlayed[i]);
-            }
-            cardsPlayed = [];
-        }
+        winner = player1;
         console.log("Player 1 wins the round");
     } else if (cardP2.value > cardP1.value && cardP2.value > cardP3.value) {
-        player2.addCard(cardP1);
-        player2.addCard(cardP2);
-        player2.addCard(cardP3);
-        if (cardsPlayed.length > 0) {
-            for (var i = 0; i < cardsPlayed.length; i++) {
-                player2.addCard(cardsPlayed[i]);
-            }
-            cardsPlayed = [];
-        }
+        winner = player2;
         console.log("Player 2 wins the round");
     } else if (cardP3.value > cardP1.value && cardP3.value > cardP2.value) {
-        player3.addCard(cardP1);
-        player3.addCard(cardP2);
-        player3.addCard(cardP3);
-        if (cardsPlayed.length > 0) {
-            for (var i = 0; i < cardsPlayed.length; i++) {
-                player3.addCard(cardsPlayed[i]);
-            }
-            cardsPlayed = [];
-        }
+        winner = player3;
         console.log("Player 3 wins the round");
     } else {
-
         console.log("War!");
-
         var p1WDisc = null;
         var p2WDisc = null;
         var p3WDisc = null;
@@ -177,14 +168,22 @@ function playGame() {
         playGame();
     }
 
+    // Add the current round cards to the winner's deck (but do not move them yet)
+    if (winner !== null) {
+        winner.addCard(cardP1);
+        winner.addCard(cardP2);
+        winner.addCard(cardP3);
+    }
+
+    // Update geometry after each turn to reflect the player's deck and card layout
     player1.updateGeo();
     player2.updateGeo();
     player3.updateGeo();
 
-    scene.add(player1.cardGroup)
-    scene.add(player2.cardGroup)
-    scene.add(player3.cardGroup)
-    
+    // Add player card groups to the scene
+    scene.add(player1.cardGroup);
+    scene.add(player2.cardGroup);
+    scene.add(player3.cardGroup);
 }
 
 function returnCardsToWinner() {
