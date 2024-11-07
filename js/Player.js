@@ -7,6 +7,7 @@ export default class Player {
         this.score = 0;
         this.inch = inch;
         this.cardGroup = null;
+        this.isAnimatingCard = false; // Flag to track card animation state
     }
 
     // addCard(card) adds a card to the player's hand
@@ -15,17 +16,49 @@ export default class Player {
         this.score += 1;
     }
 
-    // drawCard() takes the top card from the player's hand and returns it
+// Draw Card with Spread and Designated Area Control
     drawCard() {
-        var card = this.cards.shift();
-        if (card == undefined) {
+        if (this.cards.length === 0) {
             this.score = 0;
             return null;
         }
-        else {
-            this.score -= 1;
-            return card;
-        }
+
+        const card = this.cards.shift();
+        this.score -= 1;
+
+        const cardMesh = card.mesh;
+        const cardPosition = cardMesh.position.clone(); // Store the initial position
+        let targetPosition;
+
+        // Get the deck position and center position
+        const playerDeckPosition = this.getDeckPosition();  // Get the player's deck position
+        const centerPosition = new THREE.Vector3(0, 0, 0); // Center of the table
+
+        // Calculate the designated area: between deck and center based on spreadFactor
+        const direction = new THREE.Vector3().subVectors(centerPosition, playerDeckPosition).normalize();  // Vector from deck to center
+        const spreadFactor = 0.9;
+        const spreadDistance = this.inch * 24 * spreadFactor; // Adjust this factor to control distance
+
+        // Calculate the target position based on spreadFactor
+        targetPosition = new THREE.Vector3().addVectors(playerDeckPosition, direction.multiplyScalar(spreadDistance));
+
+        // Now apply the spread distance for the individual cards within the designated area
+        const spreadOffset = this.inch * 6; // Adjust this to control how spread the cards are
+        const spreadRandomX = (Math.random() - 0.5) * spreadOffset; // Random offset for X
+        const spreadRandomZ = (Math.random() - 0.5) * spreadOffset; // Random offset for Z
+
+        // Apply the random spread within the designated area
+        targetPosition.x += spreadRandomX;
+        targetPosition.z += spreadRandomZ;
+
+        // Animate the card to this position
+        this.animateCardMovement(cardMesh, cardPosition, targetPosition, () => {
+            scene.add(cardMesh); // Add card to the scene (table area)
+            this.updateGeo(); // Update the card layout after drawing
+            this.isAnimatingCard = false; // Reset animation flag
+        }, true); // Flip face up
+
+        return card;
     }
 
     // Return Card to Deck (face down)
