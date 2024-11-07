@@ -275,9 +275,9 @@ function keyHandler(e) {
                 scene.add(player2.cardGroup)
                 scene.add(player3.cardGroup)
 
-                console.log("Number of cards in player 1's hand: " + player1.cards.length);
-                console.log("Number of cards in player 2's hand: " + player2.cards.length);
-                console.log("Number of cards in player 3's hand: " + player3.cards.length);
+                // console.log("Number of cards in player 1's hand: " + player1.cards.length);
+                // console.log("Number of cards in player 2's hand: " + player2.cards.length);
+                // console.log("Number of cards in player 3's hand: " + player3.cards.length);
 
                 cardsPlayed = [];
 
