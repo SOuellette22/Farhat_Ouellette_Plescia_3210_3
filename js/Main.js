@@ -187,6 +187,51 @@ function playGame() {
     
 }
 
+function returnCardsToWinner() {
+    // Check if there are cards to return
+    if (cardsPlayed.length === 0) {
+        console.log("No cards to return.");
+        return; // No cards to return
+    }
+
+    console.log("Returning cards to winner...");
+
+    // Find the winner of the previous round (using card values)
+    let winner = null;
+    const [cardP1, cardP2, cardP3] = cardsPlayed;
+
+    if (cardP1.value > cardP2.value && cardP1.value > cardP3.value) {
+        winner = player1;
+    } else if (cardP2.value > cardP1.value && cardP2.value > cardP3.value) {
+        winner = player2;
+    } else if (cardP3.value > cardP1.value && cardP3.value > cardP2.value) {
+        winner = player3;
+    }
+
+    if (!winner) {
+        console.log("No winner, skipping return.");
+        return; // Skip if no winner
+    }
+
+    // Return the cards to the winner’s deck
+    let completedAnimations = 0;
+
+    // Helper function to check if all animations are complete
+    function checkReturnComplete() {
+        completedAnimations++;
+        console.log(`Completed animations: ${completedAnimations}/${cardsPlayed.length}`);
+        if (completedAnimations === cardsPlayed.length) {
+            console.log("All animations complete, proceeding to next round...");
+            playGame();
+        }
+    }
+
+    // Animate each card to the winner's deck
+    cardsPlayed.forEach(card => {
+        winner.returnCardToDeck(card, checkReturnComplete);
+    });
+}
+
 // rotates the camera around the scene
 function rotateAboutWorldAxis(object, axis, angle) {
     var rotationMatrix = new THREE.Matrix4() ;
