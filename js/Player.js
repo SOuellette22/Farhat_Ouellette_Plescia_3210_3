@@ -28,11 +28,41 @@ export default class Player {
         }
     }
 
-    // getCardCount() returns the number of cards in the player's hand
-    //  "This is the score of that player"
-    getCardCount() {
-        return this.cards.length;
+    // Animation for card movement and flipping (face up or face down)
+    animateCardMovement(cardMesh, startPosition, endPosition, onComplete, flipToFaceUp = true) {
+        const duration = 2.5; // Duration in seconds for the animation
+        const steps = 60; // Number of animation steps (frames)
+        let step = 0;
+
+        // Rotation angles for flipping
+        const rotationStart = cardMesh.rotation.y; // Start rotation (either face up or face down)
+        const rotationEnd = flipToFaceUp ? Math.PI : 0; // If face up, rotate 180 degrees (Math.PI), else 0
+
+        function updatePosition() {
+            if (step < steps) {
+                step++;
+                const t = step / steps;
+
+                // Interpolate position using lerp (linear interpolation)
+                cardMesh.position.lerpVectors(startPosition, endPosition, t);
+
+                // Interpolate rotation to animate the card flipping over (around the y-axis)
+                const currentRotation = rotationStart + (rotationEnd - rotationStart) * t;
+                cardMesh.rotation.y = currentRotation; // Animate the rotation around the Y-axis
+
+                requestAnimationFrame(updatePosition); // Continue the animation
+            } else {
+                // Ensure the card ends up at the final position and rotation
+                cardMesh.position.set(endPosition.x, endPosition.y, endPosition.z);
+                cardMesh.rotation.y = rotationEnd; // Ensure the card is at the correct rotation (face up or down)
+                if (onComplete) onComplete(); // Call the completion callback once done
+            }
+        }
+
+        updatePosition(); // Start the animation
     }
+
+
 
     // updates the deck geometry of the player
     updateGeo() {
