@@ -1,0 +1,38 @@
+#card-counts {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    gap: 20px;
+}
+
+.player-counts {
+    font-size: 16px;
+}
+
+#game-over-prompt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#game-over-prompt h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+#game-over-prompt p {
+    font-size: 24px;
+    margin: 0;
+}

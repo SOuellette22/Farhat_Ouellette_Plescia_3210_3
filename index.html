@@ -8,7 +8,7 @@
 <body style="margin: 0;">
     <canvas id="myCanvas"></canvas>
     <audio id="myAudio" src="./audio/suspensefulMusic.mp3"></audio>
-
+    <link rel="stylesheet" href="main.css">
     <script type="importmap">
         {
             "imports": {
@@ -17,11 +17,17 @@
         }
     </script>
     
-    <script src="./js/Main.js" type="module">
-    
+    <script src="./js/Main.js" type="module"></script>
 
+    <div id="card-counts">
+        <div class="player-counts" id="player1-count">Player 1: 0</div>
+        <div class="player-counts" id="player2-count">Player 2: 0</div>
+        <div class="player-counts" id="player3-count">Player 3: 0</div>
+    </div>
 
-    </script>
-
+    <div id="game-over-prompt" style="display:none;">
+        <h1>Game Over</h1>
+        <p>Press 'N' to start a new game</p>
+    </div>
 </body>
 </html>

@@ -45,6 +45,7 @@ var player2 = new Player(inch, 2);
 var player3 = new Player(inch, 3);
 
 deck.deal(player1, player2, player3);
+updateCardCounts();
 player1.updateGeo();
 player2.updateGeo();
 player3.updateGeo();
@@ -86,10 +87,12 @@ function playGame() {
     var cardP1 = player1.drawCard();
     var cardP2 = player2.drawCard();
     var cardP3 = player3.drawCard();
+    updateCardCounts();
 
     if (cardP1 == null || cardP2 == null || cardP3 == null) {
         console.log("Game Over");
         gameOver = true;
+        showGameOverPrompt(); // Show the game over prompt
         return;
     }
 
@@ -199,6 +202,8 @@ function returnCardsToWinner() {
         }
     }
 
+    updateCardCounts();
+
     // Animate each card to the winner's deck
     cardsPlayed.forEach(card => {
         winner.returnCardToDeck(card, checkReturnComplete);
@@ -276,7 +281,8 @@ function keyHandler(e) {
                 playGame();
             } else {
                 console.log("Start a new game");
-                
+                hideGameOverPrompt(); // Hide the game over prompt
+
                 deck = new Deck(inch);
 
                 player1 = new Player(inch, 1);
@@ -306,6 +312,20 @@ function keyHandler(e) {
 }
 
 document.addEventListener( "keydown", keyHandler, false );
+
+function updateCardCounts() {
+    document.getElementById("player1-count").innerText = `Player 1: ${player1.cards.length}`;
+    document.getElementById("player2-count").innerText = `Player 2: ${player2.cards.length}`;
+    document.getElementById("player3-count").innerText = `Player 3: ${player3.cards.length}`;
+}
+
+function showGameOverPrompt() {
+    document.getElementById("game-over-prompt").style.display = "block";
+}
+
+function hideGameOverPrompt() {
+    document.getElementById("game-over-prompt").style.display = "none";
+}
 
 function playAudio() {
     audio.play();
