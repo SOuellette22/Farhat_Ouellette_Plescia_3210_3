@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-
 export default class Card {
     
     constructor(suit, value, inch) {
@@ -53,25 +52,34 @@ export default class Card {
                         action.play();   // Play the animation from the start
                     }
                 });
-            
-            let lastTime = performance.now();
-        
+            }
+        }
             function animate() {
             requestAnimationFrame(animate);
-    
-            const currentTime = performance.now();
-            const deltaTime = (currentTime - lastTime) / 1000;
-            lastTime = currentTime;
-    
-            const movementSpeed = speed * deltaTime;
-    
-            renderer.clear();
-            renderer.render(scene, camera);
+            let mesh;
+
+            // Create an AnimationMixer, and get the list of AnimationClip instances
+            const mixer = new THREE.AnimationMixer( mesh );
+            const clips = this.mesh.animations;
+            
+            // Update the mixer on each frame
+            function update () {
+                mixer.update( deltaSeconds );
             }
+            
+            // Play a specific animation
+            const clip = THREE.AnimationClip.findByName( clips, 'dance' );
+            const action = mixer.clipAction( clip );
+            action.play();
+            
+            // Play all animations
+            clips.forEach( function ( clip ) {
+                mixer.clipAction( clip ).play();
+            } );
+        update();
+        animate();
         
     }
-}
-    
         // Create the cards geometry and everything you wolud need to render it
         //  this includes the mesh, the material, and the texture
         // also the animation of the card (https://threejs.org/docs/#manual/en/introduction/Animation-system)
