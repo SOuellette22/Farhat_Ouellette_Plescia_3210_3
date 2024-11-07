@@ -36,21 +36,8 @@ scene.add(p.spotLight.target);
 scene.add(p.table);
 scene.add(p.spotLightHelper);
 
-// Single card Test Code below:
-    // var card = new Cards("clubs", 11, inch)
-    // card.mesh.position.set(0, inch * 2, 0);
-    // scene.add(card.mesh);
-
 // Test the Deck code below:
 var deck = new Deck(inch);
-    // console.log(deck.cards);
-    // for (let i = 0; i < 4; i++) {
-    //     for (let j = 0; j < 13; j++) {
-    //         deck.cards[i * 13 + j].mesh.position.set((inch * 2.5) * i, (inch * 3.5) * j, 0);
-    //         scene.add(deck.cards[i * 13 + j].mesh);
-    //     }
-    // }
-    // console.log(deck.cards);
 
 // Test the Player code below:
 var player1 = new Player(inch, 1);
@@ -61,19 +48,6 @@ deck.deal(player1, player2, player3);
 player1.updateGeo();
 player2.updateGeo();
 player3.updateGeo();
-
-    // console.log(player1.cards);
-    // console.log(player1.score);
-    // console.log(player2.cards);
-    // console.log(player2.score);
-    // console.log(player3.cards);
-    // console.log(player3.score);
-
-    // test to see if drawCard works
-        // var drawCard = player3.drawCard();
-        // console.log(player3.cards);
-        // console.log(player3.score);
-        // console.log(drawCard);
 
 // Test code to see if the player deck will work
 scene.add(player1.cardGroup)
@@ -98,7 +72,17 @@ var cardsPlayed = [];
 var gameOver = false;
 
 function playGame() {
+    console.log("Starting a new round");
 
+    // Only proceed if the previous round's cards have finished returning
+    if (cardsPlayed.length > 0) {
+        console.log("Cards already played this round: ", cardsPlayed);
+        returnCardsToWinner();
+        cardsPlayed.length = 0;
+        return; // Don't proceed to new turn until the previous cards are returned
+    }
+
+    // Draw cards for the new round
     var cardP1 = player1.drawCard();
     var cardP2 = player2.drawCard();
     var cardP3 = player3.drawCard();
@@ -109,43 +93,24 @@ function playGame() {
         return;
     }
 
+    // Add cards to the table (cards played in this round)
+    cardsPlayed.push(cardP1, cardP2, cardP3);
+    console.log("New cards drawn: ", cardsPlayed);
+
+    // Determine winner of the round
+    let winner = null;
+
     if (cardP1.value > cardP2.value && cardP1.value > cardP3.value) {
-        player1.addCard(cardP1);
-        player1.addCard(cardP2);
-        player1.addCard(cardP3);
-        if (cardsPlayed.length > 0) {
-            for (var i = 0; i < cardsPlayed.length; i++) {
-                player1.addCard(cardsPlayed[i]);
-            }
-            cardsPlayed = [];
-        }
+        winner = player1;
         console.log("Player 1 wins the round");
     } else if (cardP2.value > cardP1.value && cardP2.value > cardP3.value) {
-        player2.addCard(cardP1);
-        player2.addCard(cardP2);
-        player2.addCard(cardP3);
-        if (cardsPlayed.length > 0) {
-            for (var i = 0; i < cardsPlayed.length; i++) {
-                player2.addCard(cardsPlayed[i]);
-            }
-            cardsPlayed = [];
-        }
+        winner = player2;
         console.log("Player 2 wins the round");
     } else if (cardP3.value > cardP1.value && cardP3.value > cardP2.value) {
-        player3.addCard(cardP1);
-        player3.addCard(cardP2);
-        player3.addCard(cardP3);
-        if (cardsPlayed.length > 0) {
-            for (var i = 0; i < cardsPlayed.length; i++) {
-                player3.addCard(cardsPlayed[i]);
-            }
-            cardsPlayed = [];
-        }
+        winner = player3;
         console.log("Player 3 wins the round");
     } else {
-
         console.log("War!");
-
         var p1WDisc = null;
         var p2WDisc = null;
         var p3WDisc = null;
@@ -177,14 +142,67 @@ function playGame() {
         playGame();
     }
 
+    // Add the current round cards to the winner's deck (but do not move them yet)
+    if (winner !== null) {
+        winner.addCard(cardP1);
+        winner.addCard(cardP2);
+        winner.addCard(cardP3);
+    }
+
+    // Update geometry after each turn to reflect the player's deck and card layout
     player1.updateGeo();
     player2.updateGeo();
     player3.updateGeo();
 
-    scene.add(player1.cardGroup)
-    scene.add(player2.cardGroup)
-    scene.add(player3.cardGroup)
-    
+    // Add player card groups to the scene
+    scene.add(player1.cardGroup);
+    scene.add(player2.cardGroup);
+    scene.add(player3.cardGroup);
+}
+
+function returnCardsToWinner() {
+    // Check if there are cards to return
+    if (cardsPlayed.length === 0) {
+        console.log("No cards to return.");
+        return; // No cards to return
+    }
+
+    console.log("Returning cards to winner...");
+
+    // Find the winner of the previous round (using card values)
+    let winner = null;
+    const [cardP1, cardP2, cardP3] = cardsPlayed;
+
+    if (cardP1.value > cardP2.value && cardP1.value > cardP3.value) {
+        winner = player1;
+    } else if (cardP2.value > cardP1.value && cardP2.value > cardP3.value) {
+        winner = player2;
+    } else if (cardP3.value > cardP1.value && cardP3.value > cardP2.value) {
+        winner = player3;
+    }
+
+    if (!winner) {
+        console.log("No winner, skipping return.");
+        return; // Skip if no winner
+    }
+
+    // Return the cards to the winner’s deck
+    let completedAnimations = 0;
+
+    // Helper function to check if all animations are complete
+    function checkReturnComplete() {
+        completedAnimations++;
+        console.log(`Completed animations: ${completedAnimations}/${cardsPlayed.length}`);
+        if (completedAnimations === cardsPlayed.length) {
+            console.log("All animations complete, proceeding to next round...");
+            playGame();
+        }
+    }
+
+    // Animate each card to the winner's deck
+    cardsPlayed.forEach(card => {
+        winner.returnCardToDeck(card, checkReturnComplete);
+    });
 }
 
 // rotates the camera around the scene
