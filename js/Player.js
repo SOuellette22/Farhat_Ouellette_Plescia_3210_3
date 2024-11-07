@@ -28,6 +28,22 @@ export default class Player {
         }
     }
 
+    // Return Card to Deck (face down)
+    returnCardToDeck(card, onComplete) {
+        const cardMesh = card.mesh;
+        const cardPosition = cardMesh.position.clone();
+        const playerDeckPosition = this.getDeckPosition();  // Get the player's deck position
+
+        // Animate the card back to the deck (face down)
+        this.animateCardMovement(cardMesh, cardPosition, playerDeckPosition, () => {
+            // Once the animation is done, we can return the card to the deck
+            scene.remove(cardMesh); // Remove the card from the scene
+            this.cards.push(cardMesh); // Add the card back to the player's hand (deck)
+            this.updateGeo(); // Update the deck geometry
+            if (onComplete) onComplete(); // Call any completion callback
+        }, false); // Flip face down
+    }
+
     // Function to get the player's deck position (adjusted for each player's position)
     getDeckPosition() {
         let position = new THREE.Vector3();
