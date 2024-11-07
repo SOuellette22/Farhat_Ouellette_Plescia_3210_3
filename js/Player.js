@@ -28,6 +28,24 @@ export default class Player {
         }
     }
 
+    // Function to get the player's deck position (adjusted for each player's position)
+    getDeckPosition() {
+        let position = new THREE.Vector3();
+
+        if (this.id == 1) {
+            // Player 1: deck position
+            position.set(-this.inch * 12 * 2.75, 0, 0);
+        } else if (this.id == 2) {
+            // Player 2: deck position
+            position.set(0, 0, -this.inch * 12 * 2.75);
+        } else if (this.id == 3) {
+            // Player 3: deck position
+            position.set(this.inch * 12 * 2.75, 0, 0);
+        }
+
+        return position;
+    }
+
     // Animation for card movement and flipping (face up or face down)
     animateCardMovement(cardMesh, startPosition, endPosition, onComplete, flipToFaceUp = true) {
         const duration = 2.5; // Duration in seconds for the animation
